@@ -1,0 +1,327 @@
+@import url('https://fonts.cdnfonts.com/css/helvetica-neue-5');
+
+* {
+  --default-colour: #787b7d;
+  --absent-colour: #3b3b3d;
+  --present-colour: #b59f3b;
+  --correct-colour: #538d4e;
+  --text-colour: white;
+  --empty-border-colour: var(--absent-colour);
+  --evaluated-border-colour: var(--default-colour);
+  --key-colour: var(--default-colour);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  display: flex;
+  text-align: center;
+  color: white;
+  flex-direction: column;   
+  justify-content: center;  
+  align-items: center;       
+  min-height: 100svh;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to top right, rgb(18, 18, 19), #151516);
+}
+
+.board {
+  width: 350px; 
+  height: 420px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.row {
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row > div {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 52px;
+  height: 52px;
+  border: 2px solid var(--empty-border-colour);
+  margin: 4px;
+  text-align: center;
+  line-height: 52px;
+  vertical-align: middle;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.row > div.CORRECT {
+  --background: var(--correct-colour);
+  --border-color: var(--correct-colour);
+  animation: flipTile 0.6s ease forwards;
+  animation-delay: calc(var(--animation-order) * 200ms);
+}
+
+.winner > div.CORRECT {
+  --background: var(--correct-colour);
+  --border-color: var(--correct-colour);
+  animation: flipTile ease forwards, Bounce ease forwards; 
+  animation-duration: 0.6s, 1s;
+  animation-delay: calc(var(--animation-order) * 100ms), calc(1000ms + var(--animation-order) * 100ms);;
+}
+
+.row > div.PRESENT {
+  --background: var(--present-colour);
+  --border-color: var(--present-colour);
+  animation: flipTile 0.6s ease forwards;
+  animation-delay: calc(var(--animation-order) * 200ms);
+}
+
+.row > div.ABSENT {
+  --background: var(--absent-colour);
+  --border-color: var(--absent-colour);
+  animation: flipTile 0.6s ease forwards;
+  animation-delay: calc(var(--animation-order) * 200ms);
+}
+
+.row.active.invalid {
+  animation: Shake 0.6s ease forwards;
+}
+
+.row.active > .tile.filled {  
+  animation: flashTile 0.1s ease-in-out forwards;
+  border-color: var(--evaluated-border-colour);
+}
+
+.mykeyboard {
+  display: inline-block;
+  text-transform: uppercase;
+  justify-content: center;
+  font-weight: bold;
+  width: min(100vw, 500px);
+}
+
+.myrow {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.mykeyboard > div > div {
+  margin: 4px;
+  width: 43px;
+  height: 58px;
+  background: var(--key-colour);
+  border-radius: 4px;
+  line-height: 58px;
+  cursor: pointer;
+}
+
+.mykeyboard > div > .icon {
+  margin: 4px;
+  width: 50px;
+  height: 58px;
+  background: var(--key-colour);
+  border-radius: 4px;
+  line-height: 58px;
+}
+
+.react-icons {
+  background: var(--key-colour);
+  vertical-align: middle;
+  font-size: 27px;
+}
+
+.myrow > div.CORRECT {
+  background: var(--correct-colour);
+  transition: all 0.3s ease-in;
+  transition-delay: 1s;
+}
+.myrow > div.PRESENT {
+  background: var(--present-colour);
+  transition: all 0.3s ease-in;
+  transition-delay: 1s;
+}
+.myrow > div.ABSENT {
+  background: var(--absent-colour);
+  transition: all 0.3s ease-in;
+  transition-delay: 1s;
+}
+
+.modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: BlurIn 0.6s ease-in-out forwards;
+}
+
+.modal > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 480px;
+  padding: 40px;
+  border-radius: 4px;
+  margin: 10% auto;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+  animation: MoveIn 0.6s ease-in-out forwards;
+}
+
+.modal .solution {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.error {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  animation: BlurIn 0.6s ease-in-out forwards;
+  text-transform: uppercase;
+}
+
+.error  > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 480px;
+  padding: 40px;
+  border-radius: 4px;
+  margin: 10% auto;
+  background: rgba(181, 159, 59, 0.7);
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+  animation: FadeIn 2s ease-in-out forwards;
+}
+
+.modal[data-state="green"] > div {
+  background:rgba(125, 241, 114, 0.7);
+}
+.modal[data-state="yellow"] > div {
+  background: rgba(181, 159, 59, 0.7);
+}
+.modal[data-state="grey"] > div {
+  background: rgba(59, 59, 61, 0.7);
+}
+
+@keyframes FadeIn {
+  0% { 
+    opacity: 0; 
+  }
+  100% { 
+    opacity: 1; 
+  }
+}
+
+@keyframes MoveIn {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes BlurIn {
+  0% {
+    backdrop-filter: blur(0px);
+  }
+  100% {
+    backdrop-filter: blur(6px);
+  }
+}
+
+@keyframes Bounce {
+  0%,
+  20% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+  80% {
+    transform: translateY(2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes Shake {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-4px);
+  }
+  40%,
+  60% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes flipTile {
+  0% {
+    transform: rotateX(0deg);
+    background: transparent;
+    border-color: var(--evaluated-border-colour);
+  }
+  45% {
+    transform: rotateX(90deg);
+    background: transparent;
+    border-color: var(--evaluated-border-colour);
+  }
+  55% {
+    transform: rotateX(90deg);
+    background: var(--background);
+    border-color: var(--border-color);
+    color: #eee;
+  }
+  100% {
+    transform: rotateX(0deg);
+    background: var(--background);
+    border-color: var(--border-color);
+    color: #eee;
+  }
+}
+
+@keyframes flashTile {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+    border-color: var(--evaluated-border-colour);
+  }
+  40% {
+    transform: scale(1.1);
+    opacity: 1;
+    border-color: var(--evaluated-border-colour);
+  }
+}
