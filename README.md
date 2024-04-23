@@ -1,3 +1,15 @@
+# ReactTest1
+
+A quick test of developing a React frontend using Axios by implementing a Wordle clone.
+
+The app connects to a Spring boot backend deployed on Render, that handles all the logic.
+
+Using React, Javascript, HTML, and (S)CSS.
+
+## Screenshots
+
+![ReactFrontendTest1 GUI gif](reactfrontendtest1.gif)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
