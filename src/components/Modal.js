@@ -16,7 +16,7 @@ function Modal({ isWinner, turn, solution }) {
       data-state={turn < 4 ? "green" : isWinner ? "yellow" : "grey"}
     >
       <div>
-        <h1>{winningStatements[turn - 1]}</h1>
+        <h1>{isWinner ? winningStatements[turn - 1] : winningStatements[6]}</h1>
         <p>{isWinner ? "YOU FOUND THE WORD" : "YOU DIDN'T FIND THE WORD"}</p>
         <h2 className="solution">{solution}</h2>
         <p>
