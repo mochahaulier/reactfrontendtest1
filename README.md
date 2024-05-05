@@ -6,6 +6,9 @@ The app connects to a Spring boot backend deployed on Render, that handles all t
 
 Using React, Javascript, HTML, and (S)CSS.
 
+> [!IMPORTANT]  
+> The instance running the backend will spin down with inactivity, which can delay initial requests by 50 seconds or more.
+
 ## Screenshots
 
 ![ReactFrontendTest1 GUI gif](reactfrontendtest1.gif)
